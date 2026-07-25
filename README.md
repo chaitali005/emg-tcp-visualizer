@@ -318,3 +318,46 @@ Please make sure the application can be set up and run on a clean installation u
 - Test your setup on a clean environment before submitting — do not assume your requirements.txt is correct without verifying it with a fresh install.
 
 Good luck with your final project!
+
+FRONTNED README *********************************************************
+How to run (short):
+
+Start the TCP server
+
+Open a terminal, go into TCP_Server
+Run: python3 main.py
+It should print something like “Server started on localhost:12345”.
+Start the GUI
+
+Open another terminal, go into the project root
+Create and activate a venv, then install packages:
+python3 -m venv .venv
+source .venv/bin/activate
+pip install PySide6 vispy numpy scipy matplotlib
+Run the GUI: python main.py
+In the GUI
+
+Type 12345 into the TCP Port field
+Click “Connect”
+Click “Start Plotting” to start the live plot
+Use the Channel dropdown to change channel (1–32)
+Use the Signal mode dropdown to switch between Original, Filtered and RMS
+“Plot All Channels” opens a Matplotlib window with all 32 channels stacked with vertical offsets
+“Open Offline Plot” opens an offline dialog where you can choose a channel and mode and plot the full recording with Matplotlib
+Short GUI / frontend explanation:
+
+The main window has:
+
+TCP Port input, Connect and Disconnect buttons, and a status label
+A live VisPy plot showing one selected channel over a 10 second rolling window
+Channel selector (1–32)
+Signal mode selector: Original / Filtered / RMS
+Y-scale control and a Start/Stop plotting button
+A label showing the total signal time in seconds
+“Plot All Channels” uses the current live data to show all 32 channels together in a Matplotlib plot, each shifted vertically so they are readable.
+
+For offline inspection:
+
+All received data is stored in a RecordingBuffer during streaming
+“Open Offline Plot” opens a window where you pick a channel and a mode (Original / Filtered / RMS) and then plot the full recorded signal for that channel using Matplotlib.
+Signal processing (bandpass 20–450 Hz, 4th‑order Butterworth, and RMS with a 100 ms window) is implemented in models/signal_processing.py and is used for both the live plot and the offline plots.
